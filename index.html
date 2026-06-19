@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Lueken — CIO, Cybersecurity Leader, Founder</title>
+<meta name="description" content="Mark Lueken — Chief Information Officer, Army veteran, cybersecurity leader, and founder of Marked Solutions, Veteran Lands, and Springfield Nest.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B2545'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='52' font-weight='700' text-anchor='middle' fill='%23fff'%3EML%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Mark Lueken — CIO, Cybersecurity Leader, Founder">
+<meta property="og:description" content="Chief Information Officer, Army veteran, cybersecurity leader. Founder of Marked Solutions, Veteran Lands, and Springfield Nest.">
+<meta property="og:url" content="https://marklueken.com/">
+<meta property="og:type" content="website">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PWS6XMNXYK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PWS6XMNXYK');
+</script>
+
+<style>
+  :root{
+    --ink:#0F172A;
+    --slate:#475569;
+    --muted:#64748B;
+    --rule:#E2E8F0;
+    --rule-2:#F1F5F9;
+    --bg:#FDFCF9;
+    --card:#FFFFFF;
+    --accent:#0B2545;
+    --accent-2:#1E3A8A;
+    --gold:#B8862B;
+    --red:#B91C1C;
+    --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;
+  }
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:880px;margin:0 auto;padding:0 1.5rem}
+
+  header.site{
+    border-bottom:1px solid var(--rule);
+    background:rgba(253,252,249,.85);
+    backdrop-filter:saturate(180%) blur(8px);
+    position:sticky;top:0;z-index:50;
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 1.5rem;max-width:880px;margin:0 auto;
+  }
+  .brand{font-weight:700;color:var(--ink);letter-spacing:-.01em;font-size:1.05rem}
+  .nav-links{display:flex;gap:1.5rem;font-size:.95rem}
+  .nav-links a{color:var(--slate)}
+  .nav-links a:hover{color:var(--accent);text-decoration:none}
+
+  .hero{padding:4.5rem 1.5rem 3rem}
+  .hero-inner{max-width:880px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center}
+  .avatar{
+    width:128px;height:128px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,serif;font-size:3rem;font-weight:700;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .hero h1{
+    font-size:clamp(2rem,4vw,2.75rem);line-height:1.15;margin:0 0 .5rem;
+    letter-spacing:-.025em;font-weight:800;color:var(--ink);
+  }
+  .hero .title{
+    color:var(--slate);font-size:1.1rem;margin:0 0 .75rem;font-weight:500;
+  }
+  .vet-tag{
+    display:inline-flex;align-items:center;gap:.4rem;
+    background:rgba(11,37,69,.06);color:var(--accent);
+    border:1px solid rgba(11,37,69,.12);
+    padding:.25rem .65rem;border-radius:999px;font-size:.78rem;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;
+  }
+  .vet-tag::before{content:"★";color:var(--gold)}
+
+  section{padding:3rem 1.5rem;border-top:1px solid var(--rule)}
+  section:first-of-type{border-top:none}
+  h2{font-size:1.5rem;letter-spacing:-.01em;color:var(--ink);margin:0 0 1.25rem;font-weight:700}
+  .section-eyebrow{
+    display:block;text-transform:uppercase;letter-spacing:.14em;
+    font-size:.75rem;font-weight:700;color:var(--gold);margin-bottom:.5rem;
+  }
+  p{margin:0 0 1rem;color:var(--ink)}
+  .lead{font-size:1.1rem;color:var(--slate)}
+
+  .biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .biz{
+    background:var(--card);border:1px solid var(--rule);border-radius:14px;
+    padding:1.5rem;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:.5rem;
+    transition:transform .15s,box-shadow .15s,border-color .15s;
+  }
+  .biz:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 4px 12px rgba(15,23,42,.08),0 16px 36px rgba(15,23,42,.08);text-decoration:none}
+  .biz h3{margin:0;font-size:1.1rem;color:var(--ink);font-weight:700}
+  .biz .tagline{color:var(--slate);font-size:.95rem;flex:1;margin:0}
+  .biz .visit{color:var(--accent-2);font-weight:600;font-size:.9rem;margin-top:.5rem}
+  .biz .visit::after{content:" →";transition:transform .15s}
+  .biz:hover .visit::after{transform:translateX(2px)}
+
+  .highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .hl{
+    background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:1.25rem;
+  }
+  .hl .num{
+    font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--accent);
+    line-height:1;margin-bottom:.5rem;letter-spacing:-.02em;
+  }
+  .hl p{font-size:.95rem;color:var(--slate);margin:0}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+  .col h3{font-size:1rem;color:var(--ink);margin:0 0 .75rem;font-weight:700;letter-spacing:.02em}
+  ul.clean{list-style:none;padding:0;margin:0}
+  ul.clean li{
+    padding:.5rem 0;border-bottom:1px solid var(--rule-2);
+    color:var(--slate);font-size:.97rem;
+  }
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li strong{color:var(--ink);font-weight:600}
+
+  .contact-card{
+    background:var(--card);border:1px solid var(--rule);border-radius:14px;
+    padding:2rem;box-shadow:var(--shadow);text-align:center;
+  }
+  .contact-card a{
+    display:inline-flex;align-items:center;gap:.5rem;
+    margin:.35rem .5rem;padding:.65rem 1.2rem;
+    background:var(--accent);color:#fff;border-radius:999px;
+    font-weight:600;font-size:.95rem;
+  }
+  .contact-card a:hover{background:var(--accent-2);text-decoration:none}
+  .contact-card a.secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+  .contact-card a.secondary:hover{background:rgba(11,37,69,.05)}
+
+  footer.site{
+    padding:2rem 1.5rem;text-align:center;color:var(--muted);
+    font-size:.88rem;border-top:1px solid var(--rule);margin-top:1rem;
+  }
+
+  @media (max-width:720px){
+    .hero{padding:3rem 1.5rem 2rem}
+    .hero-inner{grid-template-columns:1fr;text-align:center;gap:1.25rem}
+    .avatar{margin:0 auto}
+    .biz-grid,.highlights{grid-template-columns:1fr}
+    .two-col{grid-template-columns:1fr;gap:1.25rem}
+    .nav-links{gap:1rem;font-size:.88rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <span class="brand">Mark Lueken</span>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#businesses">Businesses</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="avatar" aria-label="Mark Lueken">
+        <!-- Drop a headshot.jpg in the repo root to replace these initials. -->
+        ML
+      </div>
+      <div>
+        <span class="vet-tag">Army Veteran · CIO · Founder</span>
+        <h1>Mark Lueken</h1>
+        <p class="title">Chief Information Officer · Cybersecurity Leader · Entrepreneur</p>
+        <p class="lead" style="margin-top:.75rem">Twenty-plus years leading IT and cybersecurity teams in the Illinois Army National Guard. Founder of three businesses across cybersecurity, land investment, and short-term rentals.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <span class="section-eyebrow">About</span>
+      <h2>Strategy. Security. Service.</h2>
+      <p>I'm Mark Lueken, Chief Information Officer for the Illinois Army National Guard. I've spent over twenty years building IT and cybersecurity capability for organizations that can't afford to fail — from data centers in Springfield to distributed teams in Afghanistan.</p>
+      <p>I lead a red team of more than one hundred cybersecurity professionals at the annual Cyber Shield exercise, advise leadership on enterprise security and risk, and have directed the migration of major infrastructure to Azure Government Cloud. Outside the Guard, I run three businesses focused on bringing the same standards of precision and integrity to the private sector.</p>
+    </div>
+  </section>
+
+  <section id="highlights">
+    <div class="container">
+      <span class="section-eyebrow">Career Highlights</span>
+      <h2>By the numbers</h2>
+      <div class="highlights">
+        <div class="hl">
+          <div class="num">12,000</div>
+          <p>Customers migrated to Azure Cloud under my leadership</p>
+        </div>
+        <div class="hl">
+          <div class="num">112</div>
+          <p>Volunteer hackers led in offensive cyber operations during Cyber Shield</p>
+        </div>
+        <div class="hl">
+          <div class="num">3</div>
+          <p>Army Meritorious Service Medals awarded for IT leadership excellence</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="businesses">
+    <div class="container">
+      <span class="section-eyebrow">What I Build</span>
+      <h2>Three businesses, one standard</h2>
+      <p class="lead" style="margin-bottom:1.5rem">Each company applies the same principles: precision, persistence, and protection of what matters most.</p>
+      <div class="biz-grid">
+        <a class="biz" href="https://marked.solutions" target="_blank" rel="noopener">
+          <h3>Marked Solutions</h3>
+          <p class="tagline">Cybersecurity consultancy — penetration testing, red team operations, AI-assisted assessments, and security training.</p>
+          <span class="visit">marked.solutions</span>
+        </a>
+        <a class="biz" href="https://veteranlands.com" target="_blank" rel="noopener">
+          <h3>Veteran Lands</h3>
+          <p class="tagline">Fast, fair cash offers for land. Veteran-owned. We buy land nationwide with no commissions or surprise fees.</p>
+          <span class="visit">veteranlands.com</span>
+        </a>
+        <a class="biz" href="https://springfieldnest.com" target="_blank" rel="noopener">
+          <h3>Springfield Nest</h3>
+          <p class="tagline">Charming short-term rentals in the heart of Springfield, Illinois — near Washington Park.</p>
+          <span class="visit">springfieldnest.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="background">
+    <div class="container">
+      <span class="section-eyebrow">Background</span>
+      <h2>Experience &amp; credentials</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>Roles</h3>
+          <ul class="clean">
+            <li><strong>CIO</strong> · Illinois Army National Guard (2023–Present)</li>
+            <li><strong>Head of IT Operations</strong> · IL ARNG (2012–2023)</li>
+            <li><strong>Red Team Leader</strong> · Cyber Shield Exercise (2016–Present)</li>
+            <li><strong>Director, Integrated Threat Ops Center</strong> (2019–2020)</li>
+            <li><strong>Red Team</strong> · DOE CyberForce (2016–2017)</li>
+            <li><strong>Task Force Phoenix</strong> · Afghanistan (2009–2010)</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Education</h3>
+          <ul class="clean">
+            <li><strong>Advanced Operations Course</strong> · U.S. Army CGSC (2024)</li>
+            <li><strong>M.S., Computer &amp; Information Security</strong> · Northcentral University (2012)</li>
+            <li><strong>Captain Career Course</strong> · U.S. Cyber Center of Excellence (2010)</li>
+            <li><strong>B.S., Computer Science</strong> · Western Illinois University (2002)</li>
+          </ul>
+          <h3 style="margin-top:1.5rem">Certifications</h3>
+          <ul class="clean">
+            <li>CISSP · ITIL Foundations · CEH · CHFI · CompTIA Security+</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <span class="section-eyebrow">Get in Touch</span>
+      <h2>Let's connect</h2>
+      <div class="contact-card">
+        <p style="color:var(--slate);margin-bottom:1.25rem">Open to conversations on cybersecurity, IT strategy, advisory roles, and partnerships.</p>
+        <a href="mailto:marklueken00@gmail.com">Email Mark</a>
+        <a class="secondary" href="tel:+12176522971">(217) 652-2971</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  &copy; <span id="yr"></span> Mark Lueken · New Berlin, IL · Army Veteran
+</footer>
+
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+</body>
+</html>
