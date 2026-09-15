@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fast Tracker</title>
+<meta name="description" content="Simple fasting calculator: elapsed time, 48/72/96-hour milestones, and planned-fast progress.">
+<style>
+  :root {
+    --red: #B22234;
+    --red-dark: #8f1a29;
+    --blue: #3C3B6E;
+    --blue-dark: #2b2a52;
+    --white: #ffffff;
+    --off-white: #f6f7fb;
+    --ink: #1c1c28;
+    --muted: #5d5f75;
+    --line: #d9dbe8;
+    --ok: #2e7d32;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--off-white);
+    color: var(--ink);
+    padding-block: 0 40px;
+    padding-inline: 16px;
+    line-height: 1.45;
+  }
+  /* Flag stripe across the top */
+  .stripe {
+    height: 10px;
+    margin: 0 -16px;
+    background: repeating-linear-gradient(90deg, var(--red) 0 60px, var(--white) 60px 120px);
+    border-bottom: 3px solid var(--blue);
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 28px 0 10px; }
+  header h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  header h1 span { color: var(--red); }
+  header p { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 18px;
+    box-shadow: 0 2px 8px rgba(60,59,110,.06);
+  }
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 520px) { .fields { grid-template-columns: 1fr; } }
+  label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; color: var(--blue); }
+  input[type="datetime-local"] {
+    width: 100%;
+    font: inherit;
+    padding: 10px 12px;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--ink);
+  }
+  input[type="datetime-local"]:focus { outline: none; border-color: var(--blue); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  button {
+    font: inherit; font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .btn-blue { background: var(--blue); color: var(--white); }
+  .btn-blue:hover { background: var(--blue-dark); }
+  .btn-red { background: var(--red); color: var(--white); }
+  .btn-red:hover { background: var(--red-dark); }
+  .btn-ghost { background: var(--white); color: var(--blue); border-color: var(--blue); }
+  .btn-ghost:hover { background: var(--off-white); }
+
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: var(--white);
+    text-align: center;
+    border: none;
+  }
+  .hero h2 { color: #c9cbe6; }
+  .big { font-size: clamp(2.2rem, 9vw, 3.6rem); font-weight: 800; line-height: 1.1; letter-spacing: .01em; }
+  .sub { color: #d5d7ee; margin-top: 6px; font-size: .95rem; }
+
+  .progress-wrap { margin-top: 14px; }
+  .bar {
+    height: 22px;
+    background: #e9eaf3;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .bar > div {
+    height: 100%;
+    width: 0;
+    background: repeating-linear-gradient(135deg, var(--red) 0 14px, var(--red-dark) 14px 28px);
+    transition: width .4s ease;
+  }
+  .bar.done > div { background: var(--ok); }
+  .pct-row { display: flex; justify-content: space-between; margin-top: 6px; font-size: .9rem; color: var(--muted); }
+  .pct-row strong { color: var(--ink); }
+
+  .milestones { display: grid; gap: 10px; }
+  .ms {
+    display: grid;
+    grid-template-columns: 74px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--off-white);
+  }
+  .ms .hrs {
+    font-weight: 800; font-size: 1.15rem;
+    color: var(--white); background: var(--blue);
+    border-radius: 8px; padding: 6px 0; text-align: center;
+  }
+  .ms .when { font-weight: 600; }
+  .ms .when small { display: block; font-weight: 400; color: var(--muted); }
+  .ms .status { font-size: .85rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .ms.reached { border-color: #bfe3c2; background: #eef8ef; }
+  .ms.reached .hrs { background: var(--ok); }
+  .ms.reached .status { background: var(--ok); color: var(--white); }
+  .ms.pending .status { background: var(--red); color: var(--white); }
+  @media (max-width: 520px) {
+    .ms { grid-template-columns: 64px 1fr; }
+    .ms .status { grid-column: 2; justify-self: start; }
+  }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .stat { padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--off-white); }
+  .stat .k { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .stat .v { font-weight: 700; font-size: 1.05rem; margin-top: 2px; }
+
+  .empty { color: var(--muted); font-style: italic; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 26px; }
+  .stars { color: var(--red); letter-spacing: .3em; }
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<div class="wrap">
+  <header>
+    <h1>Fast <span>Tracker</span></h1>
+    <p>Enter your start time. Refresh the page to update the numbers.</p>
+  </header>
+
+  <section class="card">
+    <h2>Setup</h2>
+    <div class="fields">
+      <div>
+        <label for="start">Fast started</label>
+        <input type="datetime-local" id="start">
+      </div>
+      <div>
+        <label for="meal">First meal planned</label>
+        <input type="datetime-local" id="meal">
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn-blue" id="btn-update">Update</button>
+      <button class="btn-ghost" id="btn-now">Start now</button>
+      <button class="btn-red" id="btn-clear">Clear</button>
+    </div>
+  </section>
+
+  <section class="card hero">
+    <h2>Fasting for</h2>
+    <div class="big" id="elapsed">—</div>
+    <div class="sub" id="elapsed-sub"></div>
+  </section>
+
+  <section class="card">
+    <h2>Planned fast</h2>
+    <div id="plan-body"><p class="empty">Enter a first-meal time to see planned length and progress.</p></div>
+  </section>
+
+  <section class="card">
+    <h2>Milestones</h2>
+    <div class="milestones" id="milestones"><p class="empty">Enter a start time.</p></div>
+  </section>
+
+  <footer>
+    <span class="stars">★ ★ ★</span><br>
+    Times shown in your device's local time zone (<span id="tz"></span>).
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = 'fastTracker.v1';
+  var $ = function (id) { return document.getElementById(id); };
+  var startEl = $('start'), mealEl = $('meal');
+  var HOUR = 3600000;
+
+  // ---- helpers ----
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function toLocalInput(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+           'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function fmtDate(d) {
+    return d.toLocaleString(undefined, {
+      weekday: 'short', month: 'short', day: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+  }
+  function fmtDur(ms, short) {
+    var neg = ms < 0; ms = Math.abs(ms);
+    var totalMin = Math.floor(ms / 60000);
+    var d = Math.floor(totalMin / 1440);
+    var h = Math.floor((totalMin % 1440) / 60);
+    var m = totalMin % 60;
+    var parts = [];
+    if (d) parts.push(d + (short ? 'd' : (d === 1 ? ' day' : ' days')));
+    if (h || d) parts.push(h + (short ? 'h' : (h === 1 ? ' hr' : ' hrs')));
+    parts.push(m + (short ? 'm' : ' min'));
+    return (neg ? '-' : '') + parts.join(' ');
+  }
+  function totalHours(ms) { return (ms / HOUR).toFixed(1); }
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || '{}');
+      if (s.start) startEl.value = s.start;
+      if (s.meal) mealEl.value = s.meal;
+    } catch (e) {}
+  }
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ start: startEl.value, meal: mealEl.value }));
+    } catch (e) {}
+  }
+
+  // ---- render ----
+  function render() {
+    var now = new Date();
+    var start = startEl.value ? new Date(startEl.value) : null;
+    var meal = mealEl.value ? new Date(mealEl.value) : null;
+
+    // Elapsed
+    if (!start || isNaN(start)) {
+      $('elapsed').textContent = '—';
+      $('elapsed-sub').textContent = 'No start time set.';
+      $('milestones').innerHTML = '<p class="empty">Enter a start time.</p>';
+    } else {
+      var elapsed = now - start;
+      if (elapsed < 0) {
+        $('elapsed').textContent = 'Not started';
+        $('elapsed-sub').textContent = 'Fast begins ' + fmtDate(start) + ' (in ' + fmtDur(-elapsed) + ').';
+      } else {
+        $('elapsed').textContent = fmtDur(elapsed);
+        $('elapsed-sub').textContent = totalHours(elapsed) + ' hours total · started ' + fmtDate(start) +
+          ' · as of ' + fmtDate(now);
+      }
+
+      // Milestones
+      var html = '';
+      [48, 72, 96].forEach(function (h) {
+        var at = new Date(start.getTime() + h * HOUR);
+        var diff = at - now;
+        var reached = diff <= 0;
+        html += '<div class="ms ' + (reached ? 'reached' : 'pending') + '">' +
+          '<div class="hrs">' + h + 'h</div>' +
+          '<div class="when">' + fmtDate(at) + '<small>' + (h / 24) + ' days from start</small></div>' +
+          '<div class="status">' + (reached ? 'Reached ' + fmtDur(-diff, true) + ' ago' : 'In ' + fmtDur(diff, true)) + '</div>' +
+          '</div>';
+      });
+      $('milestones').innerHTML = html;
+    }
+
+    // Planned fast
+    var planBody = $('plan-body');
+    if (!start || isNaN(start) || !meal || isNaN(meal)) {
+      planBody.innerHTML = '<p class="empty">Enter both a start time and a first-meal time to see planned length and progress.</p>';
+      return;
+    }
+    var planned = meal - start;
+    if (planned <= 0) {
+      planBody.innerHTML = '<p class="empty">First meal must be after the start time.</p>';
+      return;
+    }
+    var done = Math.min(Math.max(now - start, 0), planned);
+    var pct = done / planned * 100;
+    var remaining = meal - now;
+    var complete = remaining <= 0;
+    var pctText = complete ? '100%' : (pct < 10 ? pct.toFixed(1) : Math.round(pct)) + '%';
+
+    planBody.innerHTML =
+      '<div class="stats">' +
+        '<div class="stat"><div class="k">Planned length</div><div class="v">' + fmtDur(planned) + '</div>' +
+          '<div class="k" style="text-transform:none;letter-spacing:0">' + totalHours(planned) + ' hours</div></div>' +
+        '<div class="stat"><div class="k">First meal</div><div class="v">' + fmtDate(meal) + '</div></div>' +
+        '<div class="stat"><div class="k">' + (complete ? 'Finished' : 'Remaining') + '</div><div class="v">' +
+          (complete ? fmtDur(-remaining) + ' ago' : fmtDur(remaining)) + '</div></div>' +
+      '</div>' +
+      '<div class="progress-wrap">' +
+        '<div class="bar' + (complete ? ' done' : '') + '"><div style="width:' + pct.toFixed(2) + '%"></div></div>' +
+        '<div class="pct-row"><span><strong>' + pctText + '</strong> of planned fast</span>' +
+        '<span>' + fmtDur(done, true) + ' / ' + fmtDur(planned, true) + '</span></div>' +
+      '</div>';
+  }
+
+  // ---- events ----
+  $('btn-update').addEventListener('click', function () { save(); render(); });
+  $('btn-now').addEventListener('click', function () { startEl.value = toLocalInput(new Date()); save(); render(); });
+  $('btn-clear').addEventListener('click', function () {
+    startEl.value = ''; mealEl.value = '';
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    render();
+  });
+  [startEl, mealEl].forEach(function (el) { el.addEventListener('change', function () { save(); render(); }); });
+
+  try { $('tz').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { $('tz').textContent = 'local'; }
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
