@@ -137,9 +137,19 @@
   .ms .when { font-weight: 600; }
   .ms .when small { display: block; font-weight: 400; color: var(--muted); }
   .ms .status { font-size: .85rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .ms .benefit {
+    grid-column: 1 / -1;
+    font-size: .85rem;
+    color: var(--muted);
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px dashed var(--line);
+  }
+  .ms .benefit strong { color: var(--ink); }
   .ms.reached { border-color: #bfe3c2; background: #eef8ef; }
   .ms.reached .hrs { background: var(--ok); }
   .ms.reached .status { background: var(--ok); color: var(--white); }
+  .ms.reached .benefit { color: #2f5e33; border-top-color: #bfe3c2; }
   .ms.pending .status { background: var(--red); color: var(--white); }
   @media (max-width: 520px) {
     .ms { grid-template-columns: 64px 1fr; }
@@ -238,6 +248,12 @@
   }
   function totalHours(ms) { return (ms / HOUR).toFixed(1); }
 
+  var BENEFITS = {
+    48: 'Growth hormone rises sharply, helping preserve muscle while you burn fat. Autophagy (cellular cleanup) starts ramping up, and insulin sensitivity improves.',
+    72: 'Autophagy is thought to hit a strong, sustained rate. Some research points to immune cell regeneration as older white blood cells break down and get replaced. Many people report sharper mental clarity here.',
+    96: 'Continued autophagy and full fat adaptation for steady energy. Benefits this far out are less studied in humans, but this is often where the psychological win of finishing the fast kicks in.'
+  };
+
   function load() {
     try {
       var s = JSON.parse(localStorage.getItem(KEY) || '{}');
@@ -283,6 +299,7 @@
           '<div class="hrs">' + h + 'h</div>' +
           '<div class="when">' + fmtDate(at) + '<small>' + (h / 24) + ' days from start</small></div>' +
           '<div class="status">' + (reached ? 'Reached ' + fmtDur(-diff, true) + ' ago' : 'In ' + fmtDur(diff, true)) + '</div>' +
+          '<div class="benefit"><strong>' + (reached ? 'Unlocked: ' : 'At this point: ') + '</strong>' + BENEFITS[h] + '</div>' +
           '</div>';
       });
       $('milestones').innerHTML = html;
