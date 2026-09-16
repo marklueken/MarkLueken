@@ -297,7 +297,7 @@
         var reached = diff <= 0;
         html += '<div class="ms ' + (reached ? 'reached' : 'pending') + '">' +
           '<div class="hrs">' + h + 'h</div>' +
-          '<div class="when">' + fmtDate(at) + '<small>' + (h / 24) + ' days from start</small></div>' +
+          '<div class="when">' + fmtDate(at) + '<small>' + h + ' hours from start</small></div>' +
           '<div class="status">' + (reached ? 'Reached ' + fmtDur(-diff, true) + ' ago' : 'In ' + fmtDur(diff, true)) + '</div>' +
           '<div class="benefit"><strong>' + (reached ? 'Unlocked: ' : 'At this point: ') + '</strong>' + BENEFITS[h] + '</div>' +
           '</div>';
